@@ -36,7 +36,7 @@ const Create = () => {
     event.preventDefault();
     try {
       await axios.post(
-        "http://localhost:3001/recipes",
+        `${process.env.REACT_APP_URL}recipes`,
         { ...recipe },
   
       );

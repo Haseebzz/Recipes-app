@@ -12,7 +12,7 @@ const Favorites = () => {
   useEffect(() => {
     const fetchfavorites = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/recipes/favorites/${userID}`);
+        const response = await axios.get(`${process.env.REACT_APP_URL}recipes/favorites/${userID}`);
         setFavorite(response.data.favorites);
         console.log(response.data.favorites);
       } catch (err) {
@@ -25,7 +25,7 @@ const Favorites = () => {
 
   const removeRecipe = async (recipeID) => {
     try {
-      const response = await axios.put('http://localhost:3001/recipes/remove', {
+      const response = await axios.put(`${process.env.REACT_APP_URL}recipes/remove`, {
         recipeID,
         userID,
       });
@@ -46,7 +46,7 @@ const Favorites = () => {
   const addComment = async (e,recipeID) => {
     e.preventDefault();
     try{
-     const result = await axios.post(`http://localhost:3001/recipes/comments/${recipeID}`, {
+     const result = await axios.post(`${process.env.REACT_APP_URL}recipes/comments/${recipeID}`, {
          text: comment,
          user: username
      })
@@ -57,7 +57,7 @@ const Favorites = () => {
  }
  const deleteComment = async (commentId) => {
   try {
-    const result = await axios.delete(`http://localhost:3001/recipes/comments/${commentId}`);
+    const result = await axios.delete(`${process.env.REACT_APP_URL}recipes/comments/${commentId}`);
     console.log(result.data);
     // Update the recipe with the deleted comment
     window.location.reload();

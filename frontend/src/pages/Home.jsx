@@ -13,8 +13,8 @@ const Home = () => {
   console.log(cookies);
   useEffect(() => {
     const fetchRecipes = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/recipes");
+      try {                            
+        const response = await axios.get(`${process.env.REACT_APP_URL}recipes`);
 
         setRecipes(response.data);
       } catch (err) {
@@ -24,7 +24,7 @@ const Home = () => {
     const fetchfavorites = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/recipes/favorites/ids/${userID}`
+          `${process.env.REACT_APP_URL}recipes/favorites/ids/${userID}`
         );
         setFavorites(response.data.favorites);
         console.log(response.data.favorites);
@@ -46,10 +46,11 @@ const Home = () => {
 
   const favoriteRecipe = async (recipeID) => {
     try {
-      const response = await axios.put("http://localhost:3001/recipes", {
+      const response = await axios.put(`${process.env.REACT_APP_URL}recipes` ,{
         recipeID,
         userID,
-      });
+      }
+      );
       const updatedfavorites = [...favorites, recipeID];
       setFavorites(updatedfavorites);
     } catch (err) {
@@ -59,7 +60,7 @@ const Home = () => {
   const removeRecipe = async (recipeID) => {
     try {
       const response = await axios.put(
-        "http://localhost:3001/recipes/remove",
+        `${process.env.REACT_APP_URL}recipes/remove`,
         {
           recipeID,
           userID,
@@ -85,7 +86,7 @@ const Home = () => {
 
   const deleteRecipe = async (recipeID) => {
     try {
-      await axios.delete("http://localhost:3001/recipes", {
+      await axios.delete(`${process.env.REACT_APP_URL}recipes`, {
         data: { recipeID, userID },
       });
 
@@ -98,7 +99,7 @@ const Home = () => {
   const addComment = async (e,recipeID) => {
      e.preventDefault();
      try{
-      const result = await axios.post(`http://localhost:3001/recipes/comments/${recipeID}`, {
+      const result = await axios.post(`${process.env.REACT_APP_URL}recipes/comments/${recipeID}`, {
           text: comment,
           user: username
       })
@@ -109,7 +110,7 @@ const Home = () => {
   }
   const deleteComment = async (commentId) => {
     try {
-      const result = await axios.delete(`http://localhost:3001/recipes/comments/${commentId}`);
+      const result = await axios.delete(`${process.env.REACT_APP_URL}recipes/comments/${commentId}`);
       console.log(result.data);
       // Update the recipe with the deleted comment
       window.location.reload();
